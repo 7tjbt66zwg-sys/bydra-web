@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Bydra Dimensions</title>
+<link href="bydra.css" rel="stylesheet" type="text/css"/>
+
+<script>
+  function poslanaPoruka() {
+    const ime = document.getElementById("ime").value.trim();
+    const prezime = document.getElementById("prezime").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const poruka = document.getElementById("tekst").value.trim();
+
+    const spolMusko = document.getElementById("musko").checked;
+    const spolZensko = document.getElementById("zensko").checked;
+
+    if (
+      ime === "" ||
+      prezime === "" ||
+      email === "" ||
+      poruka === "" ||
+      (!spolMusko && !spolZensko)
+    ) {
+      alert("Molimo ispunite sva polja.");
+      return false; 
+    }
+
+    alert("Poruka je poslana!");
+    return true;
+  }
+</script>
+
+</head>
+
+<body>
+<nav>
+    <a href="index.html"><button>Naslovnica</button></a>
+    <a href="index.html#onama"><button>O nama</button></a>
+    <a href="kontakt.html"><button>Kontakt</button></a>
+</nav>
+ <section id="kontakt" class="intro">
+    <h2>Kontakt</h2>
+    <p>
+        Email: bydra.dimensions@gmail.com<br>
+        Lokacija: Hrvatska
+    </p>
+</section>
+<div>
+<p id=posporuka>Pošaljite poruku</p>
+<form onsubmit="poslanaPoruka()">
+  <label class="labela" for="ime" >Ime:</label><br>
+  <input type="text" id="ime" name="ime" placeholder="Upišite vaše ime"><br>
+  <label class="labela" for="prezime">Prezime:</label><br>
+  <input type="text" id="prezime" name="prezime" placeholder="Upišite vaše prezime"><br>
+  <label class="labela" for="email">E-mail:</label><br>
+  <input type="text" id="email" name="email" placeholder="Upišite vašu e-mail adresu"><br>
+  <label class="labela">Spol:</label><br>
+<input type="radio" id="musko" name="spol" value="muško">
+<label for="musko">Muško</label><br>
+<input type="radio" id="zensko" name="spol" value="žensko">
+<label for="zensko">Žensko</label><br>
+<label class="labela" for="tekst">Upišite vašu poruku</label><br>
+<textarea id="tekst" name="tekst"></textarea><br><br>
+  <input type="submit" value="Pošalji">
+</form> 
+<div>
+
+</body>
+</html>
