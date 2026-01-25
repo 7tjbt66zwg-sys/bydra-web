@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Bydra Dimensions</title>
-    <link href="bydra.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="bydra.css">
 </head>
 
 <body>
@@ -14,7 +14,7 @@
         <div id="datumHR" hidden></div>
     </div>
 
-    <img src="Bydra_logo.png" alt="Bydra logo"/>
+    <img src="Bydra_logo.png" alt="Bydra logo">
     <h1>Bydra Dimensions</h1>
     <h2>Building the Smart Future</h2>
 </header>
@@ -22,10 +22,9 @@
 <nav>
     <a href="#home"><button>Naslovnica</button></a>
     <a href="#onama"><button>O nama</button></a>
-    <a href="kontakt.html"><button>Kontakt</button></a>
+    <a href="#kontakt"><button>Kontakt</button></a>
 </nav>
 
-<!-- NASLOVNICA -->
 <section id="home" class="intro">
     <p>
         Bydra Dimensions redefinira granice tehnologije spajajući umjetnu inteligenciju,
@@ -37,7 +36,6 @@
     </p>
 </section>
 
-<!-- QUOTE -->
 <div class="quote">
     <i id="quoteText"
        onmouseover="pokaziCijeli()"
@@ -46,7 +44,6 @@
     </i>
 </div>
 
-<!-- KONTROLE -->
 <section class="kontrole">
     Veličina teksta
     <input type="range" min="12" max="40" value="20"
@@ -61,7 +58,6 @@
            oninput="debljinaObruba(this.value)">
 </section>
 
-<!-- O NAMA -->
 <section id="onama" class="intro">
     <h2>O nama</h2>
     <p>
@@ -70,17 +66,15 @@
     </p>
 </section>
 
-<!-- PODRUČJA -->
 <section class="core">
-    <h3>Naša područja:</h3>
+    <h3>Naša područja</h3>
     <ol>
-        <li>IoT rješenja za pametne domove</li>
-        <li>AI sustavi i prediktivna analitika</li>
-        <li>Robotika i automatizacija</li>
+        <li><a href="iot.html">IoT rješenja za pametne domove</a></li>
+        <li><a href="ai.html">AI sustavi i prediktivna analitika</a></li>
+        <li><a href="robotika.html">Robotika i automatizacija</a></li>
     </ol>
 </section>
 
-<!-- KONTAKT -->
 <section id="kontakt" class="intro">
     <h2>Kontakt</h2>
     <p>
@@ -93,7 +87,6 @@
     © 2025 Bydra Dimensions — Smart. Connected. Future.
 </footer>
 
-<!-- VANJSKI JS -->
 <script src="newjavascript.js"></script>
 
 </body>
