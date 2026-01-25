@@ -178,7 +178,26 @@ header img {
     transition: transform 0.3s ease;
 }
 
+
 header img:hover {
     transform: scale(2);
 }
 
+textarea {
+  width: 200px;
+  height: 120px;
+}
+
+form{
+	text-align:center;
+	border: 1px solid #45a29e;
+    padding: 20px;
+    margin: 0px 100px 100px 100px;
+}
+.labela{
+	font-weight: bold;
+}
+#posporuka{
+	margin-left:100px;
+	font-weight:bold;
+}
