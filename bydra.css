@@ -1,100 +1,184 @@
-<!DOCTYPE html>
-<html lang="hr">
-<head>
-    <meta charset="UTF-8">
-    <title>Bydra Dimensions</title>
-    <link href="bydra.css" rel="stylesheet" type="text/css"/>
-</head>
+body {
+    font-family: "Poppins", "Segoe UI", sans-serif;
+    background: #0b0c10;
+    color: #e5e5e5;
+    margin: 0;
+    padding: 0;
+    line-height: 1.7;
+}
 
-<body>
 
-<header>
-    <div class="datum-blok">
-        <button onclick="prikaziDatumHR()">Datum i vrijeme</button>
-        <div id="datumHR" hidden></div>
-    </div>
+header {
+    background: linear-gradient(145deg, #0b0c10, #1f2833);
+    text-align: center;
+    padding: 60px 0 50px 0;
+    color: #66fcf1;
+    box-shadow: 0 0 25px rgba(102, 252, 241, 0.2);
+    animation: fadeIn 1.8s ease-out;
+}
 
-    <img src="Bydra_logo.png" alt="Bydra logo"/>
-    <h1>Bydra Dimensions</h1>
-    <h2>Building the Smart Future</h2>
-</header>
+header img {
+    width: 140px;
+    height: auto;
+    filter: drop-shadow(0 0 8px #45a29e);
+    margin-bottom: 15px;
+}
 
-<nav>
-    <a href="#home"><button>Naslovnica</button></a>
-    <a href="#onama"><button>O nama</button></a>
-    <a href="#kontakt"><button>Kontakt</button></a>
-</nav>
+header h1 {
+    margin: 10px 0;
+    font-size: 38px;
+    letter-spacing: 2px;
+    color: #66fcf1;
+}
 
-<!-- NASLOVNICA -->
-<section id="home" class="intro">
-    <p>
-        Bydra Dimensions redefinira granice tehnologije spajajući umjetnu inteligenciju,
-        Internet stvari i napredni dizajn.
-    </p>
-    <p>
-        Naša misija je stvoriti svijet u kojem uređaji surađuju s ljudima —
-        pametnije, brže i jednostavnije.
-    </p>
-</section>
+header h2 {
+    font-size: 18px;
+    color: #c5c6c7;
+    font-weight: 300;
+}
 
-<!-- QUOTE -->
-<div class="quote">
-    <i id="quoteText"
-       onmouseover="pokaziCijeli()"
-       onmouseout="pokaziMali()">
-        Future isn't waiting…
-    </i>
-</div>
+/* ===== INTRO ===== */
+.intro {
+    width: 75%;
+    margin: 40px auto;
+    text-align: justify;
+    font-size: 17px;
+    background-color: rgba(31, 40, 51, 0.6);
+    padding: 30px;
+    border-left: 4px solid #45a29e;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(102, 252, 241, 0.15);
+    backdrop-filter: blur(4px);
+}
 
-<!-- KONTROLE -->
-<section class="kontrole">
-    Veličina teksta
-    <input type="range" min="12" max="40" value="20"
-           oninput="velicinaTeksta(this.value)">
+/* ===== QUOTE ===== */
+.quote {
+    width: 70%;
+    margin: 60px auto;
+    text-align: center;
+    font-style: italic;
+    color: #66fcf1;
+    font-size: 20px;
+    text-shadow: 0 0 15px #45a29e;
+}
 
-    Razmak slova
-    <input type="range" min="0" max="10" value="1"
-           oninput="razmakSlova(this.value)">
+/* ===== CORE ===== */
+.core {
+    width: 75%;
+    margin: 50px auto;
+}
 
-    Debljina obruba
-    <input type="range" min="0" max="10" value="1"
-           oninput="debljinaObruba(this.value)">
-</section>
+.core h3 {
+    color: #66fcf1;
+    border-bottom: 2px solid #45a29e;
+    padding-bottom: 8px;
+    font-size: 22px;
+}
 
-<!-- O NAMA -->
-<section id="onama" class="intro">
-    <h2>O nama</h2>
-    <p>
-        Bydra Dimensions razvija IoT, AI i pametna rješenja s fokusom na
-        funkcionalnost, sigurnost i moderan dizajn.
-    </p>
-</section>
+ol {
+    list-style-type: decimal-leading-zero;
+    background: rgba(31, 40, 51, 0.8);
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(102, 252, 241, 0.1);
+}
 
-<!-- PODRUČJA -->
-<section class="core">
-    <h3>Naša područja:</h3>
-    <ol>
-        <li>IoT rješenja za pametne domove</li>
-        <li>AI sustavi i prediktivna analitika</li>
-        <li>Robotika i automatizacija</li>
-    </ol>
-</section>
+li {
+    margin: 10px 0;
+}
 
-<!-- KONTAKT -->
-<section id="kontakt" class="intro">
-    <h2>Kontakt</h2>
-    <p>
-        Email: bydra.dimensions@gmail.com<br>
-        Lokacija: Hrvatska
-    </p>
-</section>
+/* ===== FOOTER ===== */
+footer {
+    background: #1f2833;
+    color: #c5c6c7;
+    text-align: center;
+    padding: 15px 0;
+    font-size: 14px;
+    letter-spacing: 1px;
+    border-top: 2px solid #45a29e;
+}
 
-<footer>
-    © 2025 Bydra Dimensions — Smart. Connected. Future.
-</footer>
+/* ===== ANIMATION ===== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-25px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
-<!-- VANJSKI JS -->
-<script src="newjavascript.js"></script>
+nav {
+    position: fixed;
+    top: 10px;
+    right: 10px;
 
-</body>
-</html>
+    display: flex;
+    gap: 10px;
+}
+nav button {
+    padding: 8px 14px;
+    border: none;
+    background: #45a29e;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+nav button:hover {
+    background: #005fd4;
+}
+
+.kontrole {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    margin: 60px auto;
+    width: 80%;
+}
+
+.quote {
+    border: 1px solid #45a29e;
+    padding: 20px;
+    margin: 200px;
+}
+
+.datum-blok {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    text-align: left;
+}
+
+.datum-blok button {
+    padding: 6px 12px;
+    border: none;
+    background: #45a29e;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.datum-blok button:hover {
+    background: #66fcf1;
+    color: #0b0c10;
+}
+
+#datumHR {
+    margin-top: 8px;
+    font-size: 14px;
+    color: #66fcf1;
+}
+
+header img {
+    transition: transform 0.3s ease;
+}
+
+header img:hover {
+    transform: scale(2);
+}
+
