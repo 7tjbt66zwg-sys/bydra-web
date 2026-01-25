@@ -201,3 +201,15 @@ form{
 	margin-left:100px;
 	font-weight:bold;
 }
+
+/* Linkovi u numeriranoj listi (da ne budu plavi i podvučeni) */
+ol li a {
+    color: inherit;          /* uzme boju teksta liste */
+    text-decoration: none;   /* makne podcrtavanje */
+    font-weight: 500;
+}
+
+ol li a:hover {
+    color: #66fcf1;          /* blagi hover efekt */
+    text-decoration: none;
+}
