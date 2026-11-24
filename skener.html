@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>QR skener i raspored</title>
+<link href="bydra.css" rel="stylesheet" type="text/css"/>
+<style>
+  body { font-family: -apple-system, system-ui, sans-serif; margin: 0; padding: 16px; }
+  .box { max-width: 520px; margin: 0 auto; }
+  video { width: 100%; border-radius: 12px; background: #000; display: block; }
+  button { font-size: 16px; padding: 12px 18px; margin: 8px 8px 8px 0; border-radius: 10px; border: 0; background: #0a84ff; color: #fff; }
+  button.sec { background: #888; }
+  input { font-size: 16px; padding: 10px; margin: 4px 0; width: 100%; box-sizing: border-box; }
+  #status { margin: 8px 0; min-height: 1.4em; }
+  li { margin: 6px 0; }
+</style>
+</head>
+<body>
+<div class="box">
+  <p><a href="index.html">&larr; Naslovnica</a></p>
+  <h1>QR skener</h1>
+  <video id="video" playsinline muted autoplay></video>
+  <canvas id="canvas" hidden></canvas>
+  <div>
+    <button id="start">Pokreni kameru</button>
+    <button id="stop" class="sec" hidden>Zaustavi</button>
+  </div>
+  <div id="status" role="status"></div>
+
+  <h2>Raspored</h2>
+  <input id="naziv" placeholder="Naziv (popuni se iz QR koda)">
+  <input id="vrijeme" type="datetime-local">
+  <button id="dodaj">Dodaj u raspored</button>
+  <ul id="lista"></ul>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+<script>
+(function () {
+  var video = document.getElementById("video");
+  var canvas = document.getElementById("canvas");
+  var ctx = canvas.getContext("2d", { willReadFrequently: true });
+  var statusEl = document.getElementById("status");
+  var stream = null, raf = null;
+
+  function setStatus(t) { statusEl.textContent = t; }
+
+  function stop() {
+    if (raf) cancelAnimationFrame(raf);
+    raf = null;
+    if (stream) stream.getTracks().forEach(function (t) { t.stop(); });
+    stream = null;
+    video.srcObject = null;
+    document.getElementById("stop").hidden = true;
+    document.getElementById("start").hidden = false;
+  }
+
+  function tick() {
+    if (video.readyState >= 2 && video.videoWidth) {
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      var img = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      var code = window.jsQR && jsQR(img.data, img.width, img.height, { inversionAttempts: "dontInvert" });
+      if (code && code.data) {
+        onScan(code.data);
+        return;
+      }
+    }
+    raf = requestAnimationFrame(tick);
+  }
+
+  function onScan(text) {
+    stop();
+    if (navigator.vibrate) navigator.vibrate(100);
+    setStatus("Skenirano: " + text);
+    document.getElementById("naziv").value = text;
+  }
+
+  async function start() {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      setStatus("Kamera nije dostupna. Stranica mora biti otvorena preko HTTPS-a u Safariju.");
+      return;
+    }
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: { ideal: "environment" } },
+        audio: false
+      });
+      video.setAttribute("playsinline", "");
+      video.muted = true;
+      video.srcObject = stream;
+      await video.play();
+      document.getElementById("start").hidden = true;
+      document.getElementById("stop").hidden = false;
+      setStatus("Usmjeri kameru na QR kod…");
+      raf = requestAnimationFrame(tick);
+    } catch (e) {
+      stop();
+      setStatus(e && e.name === "NotAllowedError"
+        ? "Pristup kameri odbijen. Postavke > Safari > Kamera > Dopusti."
+        : "Greška kamere: " + (e && e.message ? e.message : e));
+    }
+  }
+
+  document.getElementById("start").addEventListener("click", start);
+  document.getElementById("stop").addEventListener("click", stop);
+  document.addEventListener("visibilitychange", function () { if (document.hidden) stop(); });
+
+  // Raspored (sprema se u uređaj)
+  var KEY = "bydra_raspored";
+  function load() { try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch (e) { return []; } }
+  function save(a) { try { localStorage.setItem(KEY, JSON.stringify(a)); } catch (e) {} }
+
+  function render() {
+    var ul = document.getElementById("lista");
+    ul.textContent = "";
+    var items = load().sort(function (a, b) { return a.vrijeme < b.vrijeme ? -1 : 1; });
+    items.forEach(function (it) {
+      var li = document.createElement("li");
+      li.textContent = new Date(it.vrijeme).toLocaleString("hr-HR") + " — " + it.naziv + " ";
+      var b = document.createElement("button");
+      b.className = "sec"; b.textContent = "Obriši";
+      b.onclick = function () { save(load().filter(function (x) { return x.id !== it.id; })); render(); };
+      li.appendChild(b);
+      ul.appendChild(li);
+    });
+  }
+
+  document.getElementById("dodaj").addEventListener("click", function () {
+    var naziv = document.getElementById("naziv").value.trim();
+    var vrijeme = document.getElementById("vrijeme").value;
+    if (!naziv || !vrijeme) { setStatus("Upiši naziv (ili skeniraj QR) i vrijeme."); return; }
+    var a = load();
+    a.push({ id: Date.now(), naziv: naziv, vrijeme: vrijeme });
+    save(a);
+    document.getElementById("naziv").value = "";
+    setStatus("Dodano u raspored.");
+    render();
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
